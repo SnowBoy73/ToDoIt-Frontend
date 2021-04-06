@@ -12,6 +12,7 @@ import { Router } from '@angular/router';
 export class HomeComponent implements OnInit {
   allAssignee: AssigneeModel[] = [];
   allTasks: TaskModel[] = [];
+  public product = { id: '3', name: 'Angular'};
 
   constructor(private router: Router) {
   }
@@ -23,8 +24,18 @@ export class HomeComponent implements OnInit {
 
 
   btnClickAddTask = (): any => {
-    //this.router.navigateByUrl('/');
-    this.router.navigateByUrl('/add-edit', { state: { id: 1 , name: 'Angular' } });
+     this.router.navigateByUrl('/add-edit', { state: this.product });
+
+     /*
+    this.router.navigateByUrl('/add-edi', {state: this.product}).then(r => {
+      // fulfillment
+      console.log('send success');
+    }, reason => {
+      // rejection
+      console.log('send success');
+    });
+
+     */
   }
 
 }
