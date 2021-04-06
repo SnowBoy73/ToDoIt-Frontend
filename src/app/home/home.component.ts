@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { AssigneeModel} from '../shared/models/assignee.model';
+import { TaskModel} from '../shared/models/task.model';
 
 @Component({
   selector: 'app-home',
@@ -6,10 +8,11 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./home.component.scss']
 })
 export class HomeComponent implements OnInit {
+  allAssignee: AssigneeModel[] = [];
+  allTasks: TaskModel[] = [];
+  constructor() {}
 
-  constructor() { }
+  ngOnInit(): void {}
 
-  ngOnInit(): void {
-  }
 
 }
