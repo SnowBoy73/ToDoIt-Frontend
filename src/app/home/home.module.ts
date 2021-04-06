@@ -14,7 +14,7 @@ import {MatListModule} from '@angular/material/list';
 
 
 @NgModule({
-  declarations: [HomeComponent],
+  declarations: [],
   imports: [
     CommonModule,
     // StockExchangeRoutingModule,
