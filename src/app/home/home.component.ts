@@ -23,7 +23,8 @@ export class HomeComponent implements OnInit {
 
 
   btnClickAddTask = (): any => {
-    this.router.navigateByUrl('/');
+    //this.router.navigateByUrl('/');
+    this.router.navigateByUrl('/add-edit', { state: { id: 1 , name: 'Angular' } });
   }
 
 }
