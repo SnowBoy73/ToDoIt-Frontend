@@ -13,6 +13,7 @@ import {DialogBoxComponent} from '../dialog-box/dialog-box.component';
 //
 
 
+/*
 export interface UsersData {
   name: string;
   id: number;
@@ -23,7 +24,38 @@ const ELEMENT_DATA: UsersData[] = [
   {id: 1560608796014, name: 'Machine Learning'},
   {id: 1560608787815, name: 'Robotic Process Automation'},
   {id: 1560608805101, name: 'Blockchain'}
-];
+  ];
+*/
+
+const allTasks: TaskModel[] = [{
+  id: 1,
+  description: 'foo',
+  assigneeId: 3,
+  dueDate: '22-03-2022',  // Date??
+  isCompleted: true
+},
+{
+  id: 2,
+  description: 'bubbles',
+  assigneeId: 2,
+  dueDate: '19-10-2022',  // Date??
+  isCompleted: false
+},
+{
+  id: 3,
+  description: 'swimming',
+  assigneeId: 1,
+  dueDate: '04-03-2021',  // Date??
+  isCompleted: true
+},
+{
+  id: 4,
+  description: 'fun',
+  assigneeId: 2,
+  dueDate: '10-03-2021',  // Date??
+  isCompleted: false
+}];
+
 //
 
 @Component({
@@ -40,25 +72,11 @@ export class HomeComponent implements OnInit {
   constructor(private router: Router, public dialog: MatDialog) {
   }
 
-  displayedColumns: string[] = ['id', 'name', 'action'];
-  dataSource = ELEMENT_DATA;
+  displayedColumns: string[] = ['id', 'description', 'assigneeId', 'dueDate', 'isCompleted', 'action'];
+  dataSource = allTasks;  // was ELEMENT_DATA
   // table: any = null;
 
   @ViewChild(MatTable, {static: true}) table: MatTable<any> | undefined;
-
-
-  // allAssignees: AssigneeModel[] = [];
-  // allTasks: TaskModel[] = [];
-
-  public selectedTaskId = 1;
-
-  public selectedTask = {
-    id: 2,
-    description: 'bubbles',
-    assigneeId: 2,
-    dueDate: '19-10-2022',  // Date??
-    isCompleted: true
-  };
 
   public allAssignees: AssigneeModel[] = [{
     id: 1,
@@ -74,37 +92,8 @@ export class HomeComponent implements OnInit {
   }];
 
 
-    public allTasks: TaskModel[] = [{
-    id: 1,
-    description: 'foo',
-    assigneeId: 3,
-    dueDate: '22-03-2022',  // Date??
-    isCompleted: true
-  },
-  {
-    id: 2,
-    description: 'bubbles',
-    assigneeId: 2,
-    dueDate: '19-10-2022',  // Date??
-    isCompleted: false
-  },
-    {
-      id: 3,
-      description: 'swimming',
-      assigneeId: 1,
-      dueDate: '04-03-2021',  // Date??
-      isCompleted: true
-    },
-  {
-    id: 4,
-    description: 'fun',
-    assigneeId: 2,
-    dueDate: '10-03-2021',  // Date??
-    isCompleted: false
-  }];
 
-
-  public task = {
+  public mockTask = {
     id: 4,
     description: 'fun',
     assigneeId: 2,
@@ -113,17 +102,10 @@ export class HomeComponent implements OnInit {
   };
    // const dataTable = new MDCDataTable(document.querySelector('.mdc-data-table'));
 
-  ngOnInit(): void {
-    console.log(this.allTasks);
-
-  }
-
+  ngOnInit(): void {}
 
   btnClickAddTask = (): any => {
-
-    // this.selectedTask = this.allTasks.find(task.id === this.selectedTaskId);
-
-    this.router.navigateByUrl('/add-edit', { state: this.selectedTask });
+    this.router.navigateByUrl('/add-edit', { state: this.mockTask });
      /*
     this.router.navigateByUrl('/add-edi', {state: this.product}).then(r => {
       // fulfillment
@@ -165,7 +147,10 @@ export class HomeComponent implements OnInit {
     const d = new Date();
     this.dataSource.push({
       id: d.getTime(),
-      name: rowObject.name
+      description: rowObject.description,
+      assigneeId: rowObject.assigneeId,
+      dueDate: rowObject.dueDate,
+      isCompleted: rowObject.isCompleted,
     });
     // @ts-ignore
     this.table.renderRows();
@@ -175,7 +160,10 @@ export class HomeComponent implements OnInit {
   updateRowData(rowObject: any): any{
     this.dataSource = this.dataSource.filter((value, key) => {
       if (value.id === rowObject.id){
-        value.name = rowObject.name;
+        value.description = rowObject.description,
+        value.assigneeId = rowObject.assigneeId,
+        value.dueDate = rowObject.dueDate,
+        value.isCompleted = rowObject.isCompleted;
       }
       return true;
     });

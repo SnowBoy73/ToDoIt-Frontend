@@ -1,10 +1,10 @@
-<div fxLayout="column" fxFlex="60, 60" fxLayoutAlign="center center">
+<div fxLayout="column" fxFlex="80, 80" fxLayoutAlign="center center">
 
-  <mat-card fxFlex="60, 60" fxLayout="column">
+  <mat-card fxFlex="80, 80" fxLayout="column">
     <mat-card-header fxFlex="20" fxLayoutAlign="center top">
-      <mat-card-title>ToDo</mat-card-title>
+      <mat-card-title>ToDo App</mat-card-title>
     </mat-card-header>
-    <mat-card-content fxFlex="70">
+    <mat-card-content fxFlex="90">
 
 
 
@@ -31,10 +31,29 @@
       <td mat-cell *matCellDef="let element"> {{element.id}} </td>
     </ng-container>
 
-    <!-- Name Column -->
-    <ng-container matColumnDef="name">
-      <th mat-header-cell *matHeaderCellDef> Name </th>
-      <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+    <!-- description Column -->
+    <ng-container matColumnDef="description">
+      <th mat-header-cell *matHeaderCellDef> Description </th>
+      <td mat-cell *matCellDef="let element"> {{element.description}} </td>
+    </ng-container>
+
+
+    <!-- assigneeId Column -->
+    <ng-container matColumnDef="assigneeId">
+      <th mat-header-cell *matHeaderCellDef> Assignee Id </th>
+      <td mat-cell *matCellDef="let element"> {{element.assigneeId}} </td>
+    </ng-container>
+
+    <!-- dueDate Column -->
+    <ng-container matColumnDef="dueDate">
+      <th mat-header-cell *matHeaderCellDef> Due Date </th>
+      <td mat-cell *matCellDef="let element"> {{element.dueDate}} </td>
+    </ng-container>
+
+    <!-- isCompleted Column -->
+    <ng-container matColumnDef="isCompleted">
+      <th mat-header-cell *matHeaderCellDef> isCompleted  </th>
+      <td mat-cell *matCellDef="let element"> {{element.isCompleted}} </td>
     </ng-container>
 
     <!-- Action Column -->
