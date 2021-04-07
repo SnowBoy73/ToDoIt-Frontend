@@ -1,15 +1,52 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { AssigneeModel} from '../shared/models/assignee.model';
 import { TaskModel} from '../shared/models/task.model';
 import {MDCDataTable} from '@material/data-table';
 import { Router } from '@angular/router';
+
+
+import { MatTable } from '@angular/material/table';
+import { MatDialog } from '@angular/material/dialog';
+import {DialogBoxComponent} from '../dialog-box/dialog-box.component';
+// import {MatDialogModule} from '@angular/material';
+
+//
+
+
+export interface UsersData {
+  name: string;
+  id: number;
+}
+
+const ELEMENT_DATA: UsersData[] = [
+  {id: 1560608769632, name: 'Artificial Intelligence'},
+  {id: 1560608796014, name: 'Machine Learning'},
+  {id: 1560608787815, name: 'Robotic Process Automation'},
+  {id: 1560608805101, name: 'Blockchain'}
+];
+//
 
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss']
 })
+
+
+
 export class HomeComponent implements OnInit {
+
+
+  constructor(private router: Router, public dialog: MatDialog) {
+  }
+
+  displayedColumns: string[] = ['id', 'name', 'action'];
+  dataSource = ELEMENT_DATA;
+  // table: any = null;
+
+  @ViewChild(MatTable, {static: true}) table: MatTable<any> | undefined;
+
+
   // allAssignees: AssigneeModel[] = [];
   // allTasks: TaskModel[] = [];
 
@@ -74,21 +111,17 @@ export class HomeComponent implements OnInit {
     dueDate: '10-23-2021',  // Date??
     isCompleted: false
   };
-
-
-  constructor(private router: Router) {
-  }
+   // const dataTable = new MDCDataTable(document.querySelector('.mdc-data-table'));
 
   ngOnInit(): void {
     console.log(this.allTasks);
 
   }
-  // const dataTable = new MDCDataTable(document.querySelector('.mdc-data-table'));
 
 
   btnClickAddTask = (): any => {
 
-    //this.selectedTask = this.allTasks.find(task.id === this.selectedTaskId);
+    // this.selectedTask = this.allTasks.find(task.id === this.selectedTaskId);
 
     this.router.navigateByUrl('/add-edit', { state: this.selectedTask });
      /*
@@ -102,4 +135,56 @@ export class HomeComponent implements OnInit {
      */
   }
 
+
+
+
+
+
+
+
+  openDialog(action: any, obj: any): any {
+    obj.action = action;
+    const dialogRef = this.dialog.open(DialogBoxComponent, {
+      width: '250px',
+      data: obj
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result.event === 'Add'){
+        this.addRowData(result.data);
+      }else if (result.event === 'Update'){
+        this.updateRowData(result.data);
+      }else if (result.event === 'Delete'){
+        this.deleteRowData(result.data);
+      }
+    });
+  }
+
+
+  addRowData(rowObject: any): any{
+    const d = new Date();
+    this.dataSource.push({
+      id: d.getTime(),
+      name: rowObject.name
+    });
+    // @ts-ignore
+    this.table.renderRows();
+
+  }
+
+  updateRowData(rowObject: any): any{
+    this.dataSource = this.dataSource.filter((value, key) => {
+      if (value.id === rowObject.id){
+        value.name = rowObject.name;
+      }
+      return true;
+    });
+  }
+
+  deleteRowData(rowObject: any): any{
+    this.dataSource = this.dataSource.filter((value, key) => {
+      return value.id !== rowObject.id;
+    });
+  }
 }
+

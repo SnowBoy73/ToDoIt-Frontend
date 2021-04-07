@@ -15,12 +15,17 @@ import {MatInputModule} from '@angular/material/input';
 import {MatIconModule} from '@angular/material/icon';
 import {MatListModule} from '@angular/material/list';
 import {SharedModule} from './shared/shared.module';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MatTableModule } from '@angular/material/table';
+import { MatDialogModule } from '@angular/material/dialog';
+import { DialogBoxComponent } from './dialog-box/dialog-box.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     HomeComponent,
-    AddEditComponent
+    AddEditComponent,
+    DialogBoxComponent
   ],
   imports: [
     BrowserModule,
@@ -35,8 +40,13 @@ import {SharedModule} from './shared/shared.module';
     MatListModule,
     SharedModule,
     HttpClientModule,
+    BrowserAnimationsModule,
+    FormsModule,
+    MatTableModule,
+    MatDialogModule,
   ],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  entryComponents: [DialogBoxComponent] //
 })
 export class AppModule { }
