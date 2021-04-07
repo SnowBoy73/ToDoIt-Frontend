@@ -15,22 +15,22 @@ import { map, filter} from 'rxjs/operators';
      {{ product | json }}`*/
 })
 export class AddEditComponent implements OnInit {
-  product: any;
+  editedTask: any;
 
   constructor(private router: Router, private activatedRoute: ActivatedRoute) {
       // console.log(this.router.getCurrentNavigation().extras.state);
   }
 
   ngOnInit(): void {
-    this.product = history.state;
+    this.editedTask = history.state;
     if (history.state) {
-      console.log('dd', this.product.id);
-      console.log('sss', this.product.id);
+      console.log('dd', this.editedTask.id);
+      console.log('sss', this.editedTask.id);
     }
   }
 
   btnClickSubmitTask = (): any => {
-    this.router.navigateByUrl('/home', {state: this.product});
+    this.router.navigateByUrl('/home', {state: this.editedTask});
   }
 
   }

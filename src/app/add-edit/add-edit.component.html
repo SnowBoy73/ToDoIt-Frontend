@@ -1,10 +1,32 @@
 <p>add-edit works! </p>
 
+<div fxLayout="column" fxFlex="60, 60" fxLayoutAlign="center center">
 
-<H1>TEST</H1>
+  <mat-card fxFlex="60, 60" fxLayout="column">
+    <mat-card-header fxFlex="10" fxLayoutAlign="center top">
+      <mat-card-title>Add/Edit Task</mat-card-title>
+    </mat-card-header>
+    <mat-card-content fxFlex="100">
 
-<p>Id :   <input type="text" [(ngModel)]="product.id" > </p>
-<p>name :<input type="text" [(ngModel)]="product.name" > </p>
 
-<button (click)="btnClickSubmitTask()">Submit Task</button>
+      <p>Id :   <input type="text" [(ngModel)]="editedTask.id" > </p>
+      <p>Description :<input type="text" [(ngModel)]="editedTask.description" > </p>
+      <p>assigneeId :   <input type="text" [(ngModel)]="editedTask.assigneeId" > </p>
+      <p>dueDate :<input type="text" [(ngModel)]="editedTask.dueDate" > </p>
+      <p>isCompleted :<input type="text" [(ngModel)]="editedTask.isCompleted" > </p>
+
+
+      <button (click)="btnClickSubmitTask()">Submit Task</button>
+
+
+
+
+
+    </mat-card-content>
+  </mat-card>
+
+
+
+</div>
 <a [routerLink]="['dynamic']" [state]="{ id:1 , name:'Angular'}">Dynamic Data</a>
+
