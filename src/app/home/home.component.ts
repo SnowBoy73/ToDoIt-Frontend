@@ -13,6 +13,14 @@ export class HomeComponent implements OnInit {
   allAssignee: AssigneeModel[] = [];
   allTasks: TaskModel[] = [];
   public product = { id: '3', name: 'Angular'};
+  public testTask = {
+    id: 4,
+    description: 'fun',
+    assigneeId: 2,
+    dueDate: '10-23-2021',  // Date??
+    isCompleted: false
+  };
+
 
   constructor(private router: Router) {
   }
@@ -24,7 +32,7 @@ export class HomeComponent implements OnInit {
 
 
   btnClickAddTask = (): any => {
-     this.router.navigateByUrl('/add-edit', { state: this.product });
+     this.router.navigateByUrl('/add-edit', { state: this.testTask });
 
      /*
     this.router.navigateByUrl('/add-edi', {state: this.product}).then(r => {
