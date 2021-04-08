@@ -12,8 +12,7 @@ export class ToDoService {
 
   constructor(private http: HttpClient) { }
 
-  async getAllTasks(id: number): Promise<any[]>{
-    console.log('SERVICE CLASS');
+  async getAllTasks(id: number): Promise<TaskModel[]>{
     const uspromise = await this.http.get<any[]>(environment.apiUrl + '/api/ToDo/' + id).toPromise();
     return uspromise.map(a => {
       console.log(a);
@@ -29,15 +28,18 @@ export class ToDoService {
   }
 
 
-  async addTask(id: number): Promise<void>{
+  async addTask(task: TaskModel): Promise<void>{
+    console.log('SERVICE CLASS');
+    console.log(task);
+
     // const uspromise = await this.http.post<id>(environment.apiUrl + '/api/ToDo/' + id).toPromise();
   }
 
   async updateTask(task: TaskModel): Promise<void>{
-    // const uspromise = await this.http.post<id>(environment.apiUrl + '/api/ToDo/' + task).toPromise();
+    // const uspromise = await this.http.put<id>(environment.apiUrl + '/api/ToDo/' + task).toPromise();
   }
 
   async deleteTask(id: number): Promise<void>{
-    // const uspromise = await this.http.post<id>(environment.apiUrl + '/api/ToDo/' + id).toPromise();
+    // const uspromise = await this.http.delete<id>(environment.apiUrl + '/api/ToDo/' + id).toPromise();
   }
 }

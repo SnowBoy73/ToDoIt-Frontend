@@ -98,14 +98,7 @@ export class HomeComponent implements OnInit {
       if (result.event === 'Add Task'){
         this.addRowData(result.data);
 
-        this.todoService.addTask(result.data).then(r =>
-        {
-          // fulfillment
-          console.log('send success');
-        }, reason => {
-          // rejection
-          console.log('send fail');
-        });
+
 
       }else if (result.event === 'Edit Task'){
         this.updateRowData(result.data);
@@ -117,7 +110,18 @@ export class HomeComponent implements OnInit {
 
 
   addRowData(rowObject: any): any{
-    const d = new Date();
+    const d = new Date();  // MOCK
+    const newTask: TaskModel = {
+      id: d.getTime(),  // MOCK
+      description: rowObject.description,
+      assigneeId: rowObject.assigneeId,
+      dueDate: rowObject.dueDate,
+      isCompleted: rowObject.isCompleted,
+    };
+    console.log('ADD ROW DATA', newTask.description);
+
+      // PUSH newTask to Backend here!!
+
     this.dataSource.push({
       id: d.getTime(),
       description: rowObject.description,
@@ -127,12 +131,20 @@ export class HomeComponent implements OnInit {
     });
     // @ts-ignore
     this.table.renderRows();
-
-    // ADD SERVICE CALL HERE ??
-
   }
 
   updateRowData(rowObject: any): any{
+    const editedTask: TaskModel = {
+      id: rowObject.id,
+      description: rowObject.description,
+      assigneeId: rowObject.assigneeId,
+      dueDate: rowObject.dueDate,
+      isCompleted: rowObject.isCompleted,
+    };
+    console.log('UPDATE ROW DATA', editedTask.description);
+
+    // PATCH newTask to Backend here!!
+
     this.dataSource = this.dataSource.filter((value, key) => {
       if (value.id === rowObject.id){
         value.description = rowObject.description,
@@ -145,6 +157,8 @@ export class HomeComponent implements OnInit {
   }
 
   deleteRowData(rowObject: any): any{
+    this.todoService.deleteTask(rowObject.id);
+
     this.dataSource = this.dataSource.filter((value, key) => {
       return value.id !== rowObject.id;
     });
