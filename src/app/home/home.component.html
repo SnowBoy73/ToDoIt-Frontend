@@ -16,10 +16,8 @@
 <!-- app.component.html -->
 <div class="container text-center">
 
-  <!--  // THIS IS THE BROKEN ADD BUTTON _ NEEDS FIXING
-  <button mat-button (click)="
-  openDialog('Add',{element:  })" mat-flat-button color="primary">Add Row</button>
--->
+
+
   <table mat-table [dataSource]="dataSource" #mytable class="my-table mat-elevation-z8">
 
     <!--- Note that these columns can be defined in any order.
@@ -70,16 +68,20 @@
   </table>
 
 
-
-
-
-
-
-
-</div>
+  </div>
 
     </mat-card-content>
   </mat-card>
+
+
+
+  <div>
+    <button mat-button (click)="
+ openDialog('Add',{})" mat-flat-button color="primary">Add New Task</button>
+  </div>
+
+
+
   <div fxLayout="row" fxFlex="60, 60" fxLayoutAlign="center center">
     <button (click)="btnClickAddTask()">Add New Task</button>
   </div>

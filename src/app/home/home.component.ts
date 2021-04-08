@@ -1,31 +1,14 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { AssigneeModel} from '../shared/models/assignee.model';
 import { TaskModel} from '../shared/models/task.model';
+import { SharedModule} from '../shared/shared.module';
 import {MDCDataTable} from '@material/data-table';
 import { Router } from '@angular/router';
 
-
 import { MatTable } from '@angular/material/table';
 import { MatDialog } from '@angular/material/dialog';
+import { MatButtonModule} from '@angular/material/button';
 import {DialogBoxComponent} from '../dialog-box/dialog-box.component';
-// import {MatDialogModule} from '@angular/material';
-
-//
-
-
-/*
-export interface UsersData {
-  name: string;
-  id: number;
-}
-
-const ELEMENT_DATA: UsersData[] = [
-  {id: 1560608769632, name: 'Artificial Intelligence'},
-  {id: 1560608796014, name: 'Machine Learning'},
-  {id: 1560608787815, name: 'Robotic Process Automation'},
-  {id: 1560608805101, name: 'Blockchain'}
-  ];
-*/
 
 const allTasks: TaskModel[] = [{
   id: 1,
@@ -119,18 +102,12 @@ export class HomeComponent implements OnInit {
 
 
 
-
-
-
-
-
   openDialog(action: any, obj: any): any {
     obj.action = action;
     const dialogRef = this.dialog.open(DialogBoxComponent, {
       width: '250px',
       data: obj
     });
-
     dialogRef.afterClosed().subscribe(result => {
       if (result.event === 'Add'){
         this.addRowData(result.data);
