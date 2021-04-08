@@ -6,7 +6,7 @@ export interface UsersData {
   id: number;
   description: string;
   assigneeId: number;
-  dueDate: string;  // Date??
+  dueDate: string;
   isCompleted: boolean;
 }
 

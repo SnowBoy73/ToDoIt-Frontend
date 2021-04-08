@@ -1,29 +1,43 @@
 import { Injectable } from '@angular/core';
 import {environment} from '../../../environments/environment';
 import {HttpClient} from '@angular/common/http';
-
+import {TaskModel} from '../models/task.model';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ToDoService {
-/*
+
   apiUrl = 'https://localhost:5001/api/ToDo';
 
   constructor(private http: HttpClient) { }
 
-  async getCollection(id: number): Promise<any[]>{
-    const uspromise = await this.http.get<any[]>(environment.apiUrl + '/api/Collection/' + id).toPromise();
+  async getAllTasks(id: number): Promise<any[]>{
+    console.log('SERVICE CLASS');
+    const uspromise = await this.http.get<any[]>(environment.apiUrl + '/api/ToDo/' + id).toPromise();
     return uspromise.map(a => {
-
       console.log(a);
-      const posterId = a.posterId;
-      const Name = a.posterName;
-      const sku = a.posterSku;
-      const path = a.path;
-      const colId = a.collectionId;
-      const isFavor = a.isFavor;
-      return {PId: posterId, PosterName: Name, PosterSku: sku, Path: path, CollectionId: colId, isFavor} as PosterModel ;
+      const taskId = a.id;
+      const taskDescription = a.description;
+      const taskAssigneeId = a.assigneeId;
+      const taskDueDate = a.dueDate;
+      const taskIsCompleted = a.isCompleted;
+      return {
+        id: taskId, description: taskDescription, assigneeId: taskAssigneeId, dueDate: taskDueDate, isCompleted: taskIsCompleted
+      } as TaskModel ;
     });
-  }*/
+  }
+
+
+  async addTask(id: number): Promise<void>{
+    // const uspromise = await this.http.post<id>(environment.apiUrl + '/api/ToDo/' + id).toPromise();
+  }
+
+  async updateTask(task: TaskModel): Promise<void>{
+    // const uspromise = await this.http.post<id>(environment.apiUrl + '/api/ToDo/' + task).toPromise();
+  }
+
+  async deleteTask(id: number): Promise<void>{
+    // const uspromise = await this.http.post<id>(environment.apiUrl + '/api/ToDo/' + id).toPromise();
+  }
 }

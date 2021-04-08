@@ -18,10 +18,10 @@
   </mat-form-field>
 
   <ng-template #elseTemplate>
-    Sure to delete <b>{{localData.description}}</b>?
+    Confirm delete of <b>{{localData.description}}</b>?
   </ng-template>
 </div>
 <div mat-dialog-actions>
-  <button mat-button (click)="doAction()">{{action}}</button>
+  <button mat-button (click)="doAction()" mat-flat-button color="warn">{{action}}</button>
   <button mat-button (click)="closeDialog()" mat-flat-button color="warn">Cancel</button>
 </div>

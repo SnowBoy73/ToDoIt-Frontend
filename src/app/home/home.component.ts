@@ -9,6 +9,7 @@ import { MatTable } from '@angular/material/table';
 import { MatDialog } from '@angular/material/dialog';
 import { MatButtonModule} from '@angular/material/button';
 import {DialogBoxComponent} from '../dialog-box/dialog-box.component';
+import {ToDoService} from '../shared/services/todo.service';
 
 const allTasks: TaskModel[] = [{
   id: 1,
@@ -52,7 +53,7 @@ const allTasks: TaskModel[] = [{
 export class HomeComponent implements OnInit {
 
 
-  constructor(private router: Router, public dialog: MatDialog) {
+  constructor(private router: Router, private todoService: ToDoService, public dialog: MatDialog) {
   }
 
   displayedColumns: string[] = ['id', 'description', 'assigneeId', 'dueDate', 'isCompleted', 'action'];
@@ -87,21 +88,6 @@ export class HomeComponent implements OnInit {
 
   ngOnInit(): void {}
 
-  btnClickAddTask = (): any => {
-    this.router.navigateByUrl('/add-edit', { state: this.mockTask });
-     /*
-    this.router.navigateByUrl('/add-edi', {state: this.product}).then(r => {
-      // fulfillment
-      console.log('send success');
-    }, reason => {
-      // rejection
-      console.log('send success');
-    });
-     */
-  }
-
-
-
   openDialog(action: any, obj: any): any {
     obj.action = action;
     const dialogRef = this.dialog.open(DialogBoxComponent, {
@@ -111,6 +97,16 @@ export class HomeComponent implements OnInit {
     dialogRef.afterClosed().subscribe(result => {
       if (result.event === 'Add Task'){
         this.addRowData(result.data);
+
+        this.todoService.addTask(result.data).then(r =>
+        {
+          // fulfillment
+          console.log('send success');
+        }, reason => {
+          // rejection
+          console.log('send fail');
+        });
+
       }else if (result.event === 'Edit Task'){
         this.updateRowData(result.data);
       }else if (result.event === 'Delete Task'){
@@ -131,6 +127,8 @@ export class HomeComponent implements OnInit {
     });
     // @ts-ignore
     this.table.renderRows();
+
+    // ADD SERVICE CALL HERE ??
 
   }
 
