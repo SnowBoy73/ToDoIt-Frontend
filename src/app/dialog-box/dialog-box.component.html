@@ -1,19 +1,19 @@
 <!-- dialog-box.component.html -->
 <h1 mat-dialog-title><strong>{{action}}</strong></h1>
 <div mat-dialog-content>
-  <mat-form-field *ngIf="action != 'Delete'; else elseTemplate">
+  <mat-form-field *ngIf="action != 'Delete Task'; else elseTemplate">
     <input placeholder="{{action}} Description" matInput [(ngModel)]="localData.description">
   </mat-form-field>
 
-  <mat-form-field *ngIf="action != 'Delete'; else elseTemplate">
+  <mat-form-field *ngIf="action != 'Delete Task'">
     <input placeholder="{{action}} Assignee Id" matInput [(ngModel)]="localData.assigneeId">
   </mat-form-field>
 
-  <mat-form-field *ngIf="action != 'Delete'; else elseTemplate">
+  <mat-form-field *ngIf="action != 'Delete Task'">
     <input placeholder="{{action}} Due Date" matInput [(ngModel)]="localData.dueDate">
   </mat-form-field>
 
-  <mat-form-field *ngIf="action != 'Delete'; else elseTemplate">
+  <mat-form-field *ngIf="action != 'Delete Task'">
     <input placeholder="{{action}} Is Completed" matInput [(ngModel)]="localData.isCompleted">
   </mat-form-field>
 

@@ -6,85 +6,63 @@
     </mat-card-header>
     <mat-card-content fxFlex="90">
 
+      <!-- app.component.html -->
+      <div class="container text-center">
+
+        <div>
+          <button mat-button (click)="
+       openDialog('Add Task',{})"  mat-flat-button color="primary">Add New Task</button>
+        </div>
+
+        <table mat-table [dataSource]="dataSource" #mytable class="my-table mat-elevation-z8">
+
+          <!-- Id Column -->
+          <ng-container matColumnDef="id">
+            <th mat-header-cell *matHeaderCellDef> ID. </th>
+            <td mat-cell *matCellDef="let element"> {{element.id}} </td>
+          </ng-container>
+
+          <!-- description Column -->
+          <ng-container matColumnDef="description">
+            <th mat-header-cell *matHeaderCellDef> Description </th>
+            <td mat-cell *matCellDef="let element"> {{element.description}} </td>
+          </ng-container>
 
 
+          <!-- assigneeId Column -->
+          <ng-container matColumnDef="assigneeId">
+            <th mat-header-cell *matHeaderCellDef> Assignee Id </th>
+            <td mat-cell *matCellDef="let element"> {{element.assigneeId}} </td>
+          </ng-container>
 
+          <!-- dueDate Column -->
+          <ng-container matColumnDef="dueDate">
+            <th mat-header-cell *matHeaderCellDef> Due Date </th>
+            <td mat-cell *matCellDef="let element"> {{element.dueDate}} </td>
+          </ng-container>
 
+          <!-- isCompleted Column -->
+          <ng-container matColumnDef="isCompleted">
+            <th mat-header-cell *matHeaderCellDef> isCompleted  </th>
+            <td mat-cell *matCellDef="let element"> {{element.isCompleted}} </td>
+          </ng-container>
 
+          <!-- Action Column -->
+          <ng-container matColumnDef="action">
+            <th mat-header-cell *matHeaderCellDef></th>
+            <td mat-cell *matCellDef="let element" class="action-link">
+              <a (click)="openDialog('Edit Task',element)">Edit</a> |
+              <a (click)="openDialog('Delete Task',element)">Delete</a>
+            </td>
+          </ng-container>
 
+          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
 
-<!-- app.component.html -->
-<div class="container text-center">
-
-
-
-  <table mat-table [dataSource]="dataSource" #mytable class="my-table mat-elevation-z8">
-
-    <!--- Note that these columns can be defined in any order.
-        The actual rendered columns are set as a property on the row definition" -->
-
-    <!-- Id Column -->
-    <ng-container matColumnDef="id">
-      <th mat-header-cell *matHeaderCellDef> ID. </th>
-      <td mat-cell *matCellDef="let element"> {{element.id}} </td>
-    </ng-container>
-
-    <!-- description Column -->
-    <ng-container matColumnDef="description">
-      <th mat-header-cell *matHeaderCellDef> Description </th>
-      <td mat-cell *matCellDef="let element"> {{element.description}} </td>
-    </ng-container>
-
-
-    <!-- assigneeId Column -->
-    <ng-container matColumnDef="assigneeId">
-      <th mat-header-cell *matHeaderCellDef> Assignee Id </th>
-      <td mat-cell *matCellDef="let element"> {{element.assigneeId}} </td>
-    </ng-container>
-
-    <!-- dueDate Column -->
-    <ng-container matColumnDef="dueDate">
-      <th mat-header-cell *matHeaderCellDef> Due Date </th>
-      <td mat-cell *matCellDef="let element"> {{element.dueDate}} </td>
-    </ng-container>
-
-    <!-- isCompleted Column -->
-    <ng-container matColumnDef="isCompleted">
-      <th mat-header-cell *matHeaderCellDef> isCompleted  </th>
-      <td mat-cell *matCellDef="let element"> {{element.isCompleted}} </td>
-    </ng-container>
-
-    <!-- Action Column -->
-    <ng-container matColumnDef="action">
-      <th mat-header-cell *matHeaderCellDef></th>
-      <td mat-cell *matCellDef="let element" class="action-link">
-        <a (click)="openDialog('Update',element)">Edit</a> |
-        <a (click)="openDialog('Delete',element)">Delete</a>
-      </td>
-    </ng-container>
-
-    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-  </table>
-
-
-  </div>
+        </table>
+      </div>
 
     </mat-card-content>
   </mat-card>
-
-
-
-  <div>
-    <button mat-button (click)="
- openDialog('Add',{})" mat-flat-button color="primary">Add New Task</button>
-  </div>
-
-
-
-  <div fxLayout="row" fxFlex="60, 60" fxLayoutAlign="center center">
-    <button (click)="btnClickAddTask()">Add New Task</button>
-  </div>
-
 
 </div>

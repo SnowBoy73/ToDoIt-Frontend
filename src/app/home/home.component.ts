@@ -109,11 +109,11 @@ export class HomeComponent implements OnInit {
       data: obj
     });
     dialogRef.afterClosed().subscribe(result => {
-      if (result.event === 'Add'){
+      if (result.event === 'Add Task'){
         this.addRowData(result.data);
-      }else if (result.event === 'Update'){
+      }else if (result.event === 'Edit Task'){
         this.updateRowData(result.data);
-      }else if (result.event === 'Delete'){
+      }else if (result.event === 'Delete Task'){
         this.deleteRowData(result.data);
       }
     });
