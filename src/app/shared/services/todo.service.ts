@@ -12,8 +12,8 @@ export class ToDoService {
 
   constructor(private http: HttpClient) { }
 
-  async getAllTasks(id: number): Promise<TaskModel[]>{
-    const uspromise = await this.http.get<any[]>(environment.apiUrl + '/api/ToDo/' + id).toPromise();
+  async getAllTasks(): Promise<TaskModel[]>{
+    const uspromise = await this.http.get<any[]>(environment.apiUrl + '/api/ToDo/').toPromise();
     return uspromise.map(a => {
       console.log(a);
       const taskId = a.id;

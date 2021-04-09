@@ -1,7 +1,9 @@
+import {AssigneeModel} from './assignee.model';
+
 export interface TaskModel {
   id: number;
   description: string;
-  assigneeId: number;
-  dueDate: string;  // Date??
+  assigneeId: AssigneeModel;
+  dueDate: string;
   isCompleted: boolean;
 }

@@ -11,35 +11,6 @@ import { MatButtonModule} from '@angular/material/button';
 import {DialogBoxComponent} from '../dialog-box/dialog-box.component';
 import {ToDoService} from '../shared/services/todo.service';
 
-const allTasks: TaskModel[] = [{
-  id: 1,
-  description: 'foo',
-  assigneeId: 3,
-  dueDate: '22-03-2022',  // Date??
-  isCompleted: true
-},
-{
-  id: 2,
-  description: 'bubbles',
-  assigneeId: 2,
-  dueDate: '19-10-2022',  // Date??
-  isCompleted: false
-},
-{
-  id: 3,
-  description: 'swimming',
-  assigneeId: 1,
-  dueDate: '04-03-2021',  // Date??
-  isCompleted: true
-},
-{
-  id: 4,
-  description: 'fun',
-  assigneeId: 2,
-  dueDate: '10-03-2021',  // Date??
-  isCompleted: false
-}];
-
 //
 
 @Component({
@@ -57,10 +28,53 @@ export class HomeComponent implements OnInit {
   }
 
   displayedColumns: string[] = ['id', 'description', 'assigneeId', 'dueDate', 'isCompleted', 'action'];
-  dataSource = allTasks;  // was ELEMENT_DATA
   // table: any = null;
 
   @ViewChild(MatTable, {static: true}) table: MatTable<any> | undefined;
+
+
+  public allTasks = [{
+    id: 1,
+    description: 'foo',
+    assigneeId: {
+      id: 2,
+      name: 'bob'
+    },
+    dueDate: '22-03-2022',
+    isCompleted: true
+  },
+    {
+      id: 2,
+      description: 'bubbles',
+      assigneeId: {
+      id: 1,
+      name: 'alice'
+    },
+      dueDate: '19-10-2022',
+      isCompleted: false
+    },
+    {
+      id: 3,
+      description: 'swimming',
+      assigneeId: {
+        id: 2,
+        name: 'bob'
+      },
+      dueDate: '04-03-2021',
+      isCompleted: true
+    },
+    {
+      id: 4,
+      description: 'fun',
+      assigneeId: {
+        id: 3,
+        name: 'eve'
+      },
+      dueDate: '10-03-2021',
+      isCompleted: false
+    }];
+
+  dataSource = this.allTasks;  // was ELEMENT_DATA
 
   public allAssignees: AssigneeModel[] = [{
     id: 1,
@@ -81,12 +95,18 @@ export class HomeComponent implements OnInit {
     id: 4,
     description: 'fun',
     assigneeId: 2,
-    dueDate: '10-23-2021',  // Date??
+    dueDate: '10-23-2021',
     isCompleted: false
   };
    // const dataTable = new MDCDataTable(document.querySelector('.mdc-data-table'));
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    // this.allTasks = this.getAllTasks()
+  }
+
+  async getAllTasks(): Promise<void> {  // LOOK INTO
+    // this.allTasks = await this.todoService.getAllTasks();
+  }
 
   openDialog(action: any, obj: any): any {
     obj.action = action;
@@ -97,9 +117,6 @@ export class HomeComponent implements OnInit {
     dialogRef.afterClosed().subscribe(result => {
       if (result.event === 'Add Task'){
         this.addRowData(result.data);
-
-
-
       }else if (result.event === 'Edit Task'){
         this.updateRowData(result.data);
       }else if (result.event === 'Delete Task'){
@@ -114,7 +131,7 @@ export class HomeComponent implements OnInit {
     const newTask: TaskModel = {
       id: d.getTime(),  // MOCK
       description: rowObject.description,
-      assigneeId: rowObject.assigneeId,
+      assigneeId: rowObject.assigneeId, // .name,
       dueDate: rowObject.dueDate,
       isCompleted: rowObject.isCompleted,
     };
@@ -133,11 +150,34 @@ export class HomeComponent implements OnInit {
     this.table.renderRows();
   }
 
+  findAssignee(aid: AssigneeModel): AssigneeModel {
+     const newAssignee = this.allAssignees.find(na => na.id === aid.id) as AssigneeModel;
+     console.log (this.allAssignees);
+     console.log (' aid ' , aid);
+
+     console.log (this.allAssignees.filter(na => na.id === aid.id));
+     return newAssignee;
+    // return this.allAssignees.find(a => a.id === id) as AssigneeModel;
+
+  }
+
   updateRowData(rowObject: any): any{
+  const newAssigneeId = parseInt((rowObject.assigneeId.id), 10);
+    console.log('NEW ASSIGNEE ID ', newAssigneeId);
+
+     const newAssignee = this.allAssignees.filter(na => na.id === newAssigneeId)[0];
+    console.log('NEW ASSIGNEE ', newAssignee);
+
+
+    // const newAssigneeName = rowObject.assigneeId as AssigneeModel;
+    // const newAssignee = this.findAssignee(rowObject.assigneeId);
+
+    // console.log('NEW ASSIGNEE Name ', newAssigneeName);
+
     const editedTask: TaskModel = {
       id: rowObject.id,
       description: rowObject.description,
-      assigneeId: rowObject.assigneeId,
+      assigneeId: newAssignee,
       dueDate: rowObject.dueDate,
       isCompleted: rowObject.isCompleted,
     };
@@ -148,7 +188,7 @@ export class HomeComponent implements OnInit {
     this.dataSource = this.dataSource.filter((value, key) => {
       if (value.id === rowObject.id){
         value.description = rowObject.description,
-        value.assigneeId = rowObject.assigneeId,
+        value.assigneeId = newAssignee,
         value.dueDate = rowObject.dueDate,
         value.isCompleted = rowObject.isCompleted;
       }
