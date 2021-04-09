@@ -126,17 +126,13 @@ export class HomeComponent implements OnInit {
   }
 
 
+
+
   addRowData(rowObject: any): any{
     const d = new Date();  // MOCK
-
-    const newAssigneeId = parseInt((rowObject.assigneeId.id), 10);
+    const newAssigneeId = parseInt((rowObject.assigneeId), 10);
     console.log('NEW ASSIGNEE ID ', newAssigneeId);
-
     const newAssignee = this.allAssignees.filter(na => na.id === newAssigneeId)[0];
-    console.log('NEW ASSIGNEE ', newAssignee);
-
-
-    console.log('NEW ASSIGNEE ID ', newAssigneeId);
     console.log('NEW ASSIGNEE ', newAssignee);
 
     const newTask: TaskModel = {
@@ -153,7 +149,7 @@ export class HomeComponent implements OnInit {
     this.dataSource.push({
       id: d.getTime(),
       description: rowObject.description,
-      assigneeId: rowObject.assigneeId,
+      assigneeId: newAssignee,
       dueDate: rowObject.dueDate,
       isCompleted: rowObject.isCompleted,
     });
@@ -161,16 +157,7 @@ export class HomeComponent implements OnInit {
     this.table.renderRows();
   }
 
-  findAssignee(aid: AssigneeModel): AssigneeModel {
-     const newAssignee = this.allAssignees.find(na => na.id === aid.id) as AssigneeModel;
-     console.log (this.allAssignees);
-     console.log (' aid ' , aid);
 
-     console.log (this.allAssignees.filter(na => na.id === aid.id));
-     return newAssignee;
-    // return this.allAssignees.find(a => a.id === id) as AssigneeModel;
-
-  }
 
   updateRowData(rowObject: any): any{
     const newAssigneeId = parseInt((rowObject.assigneeId.id), 10);
@@ -218,5 +205,20 @@ export class HomeComponent implements OnInit {
       return value.id !== rowObject.id;
     });
   }
+
+
+// UNUSED
+  findAssignee(aid: AssigneeModel): AssigneeModel {
+    const newAssignee = this.allAssignees.find(na => na.id === aid.id) as AssigneeModel;
+    console.log (this.allAssignees);
+    console.log (' aid ' , aid);
+
+    console.log (this.allAssignees.filter(na => na.id === aid.id));
+    return newAssignee;
+    // return this.allAssignees.find(a => a.id === id) as AssigneeModel;
+
+  }
+
+
 }
 
