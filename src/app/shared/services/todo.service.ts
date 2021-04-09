@@ -1,17 +1,23 @@
 import { Injectable } from '@angular/core';
 import {environment} from '../../../environments/environment';
-import {HttpClient} from '@angular/common/http';
+import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {TaskModel} from '../models/task.model';
+import {Observable} from 'rxjs';
+import {tap} from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ToDoService {
 
-  apiUrl = 'https://localhost:5001/api/ToDo';
+  private apiUrl = 'https://localhost:5001/api/ToDo';
+  httpOptions = {
+    headers: new HttpHeaders({ 'Content-Type': 'application/json' })
+  };
 
   constructor(private http: HttpClient) { }
 
+  /*
   async getAllTasks(): Promise<TaskModel[]>{
     const uspromise = await this.http.get<any[]>(environment.apiUrl + '/api/ToDo/').toPromise();
     return uspromise.map(a => {
@@ -26,12 +32,20 @@ export class ToDoService {
       } as TaskModel ;
     });
   }
+*/
+
+  /** GET tasks from the server */
+  getAllTasks(): Observable<TaskModel[]> {
+    console.log('SERVICE CLASS get all');
+    return this.http.get<TaskModel[]>(this.apiUrl);
+  }
 
 
-  async addTask(task: TaskModel): Promise<void>{
-    console.log('SERVICE CLASS');
+
+  addTask(task: TaskModel): Observable<any> {
+    console.log('SERVICE CLASS add');
     console.log(task);
-
+    return this.http.put(this.apiUrl, task, this.httpOptions);
     // const uspromise = await this.http.post<id>(environment.apiUrl + '/api/ToDo/' + id).toPromise();
   }
 
@@ -43,3 +57,4 @@ export class ToDoService {
     // const uspromise = await this.http.delete<id>(environment.apiUrl + '/api/ToDo/' + id).toPromise();
   }
 }
+

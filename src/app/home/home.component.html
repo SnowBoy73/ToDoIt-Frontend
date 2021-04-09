@@ -18,38 +18,38 @@
 
           <!-- Id Column -->
           <ng-container matColumnDef="id">
-            <th mat-header-cell *matHeaderCellDef> ID. </th>
-            <td mat-cell *matCellDef="let element"> {{element.id}} </td>
+            <th mat-header-cell class="mat-id-column" *matHeaderCellDef> ID. </th>
+            <td mat-cell mat-id-column *matCellDef="let element"> {{element.id}} </td>
           </ng-container>
 
           <!-- description Column -->
             <ng-container matColumnDef="description">
-            <th mat-header-cell *matHeaderCellDef> Description </th>
+            <th mat-header-cell class="mat-description-column" *matHeaderCellDef> Description </th>
             <td mat-cell *matCellDef="let element"> {{element.description}} </td>
           </ng-container>
 
           <!-- assigneeId Column -->
-          <ng-container matColumnDef="assigneeId">
-            <th mat-header-cell *matHeaderCellDef> Assignee </th>
-            <td mat-cell *matCellDef="let element"> {{element.assigneeId.name}} </td>
+          <ng-container matColumnDef="assignee">
+            <th mat-header-cell class="mat-assignee-column" *matHeaderCellDef> Assignee </th>
+            <td mat-cell class="mat-assignee-column" *matCellDef="let element"> {{element.assignee.name}} </td>
           </ng-container>
 
           <!-- dueDate Column -->
           <ng-container matColumnDef="dueDate">
-            <th mat-header-cell *matHeaderCellDef> Due Date </th>
-            <td mat-cell *matCellDef="let element"> {{element.dueDate}} </td>
+            <th mat-header-cell class="mat-due-date-column" *matHeaderCellDef> Due Date </th>
+            <td mat-cell class="mat-due-date-column" *matCellDef="let element"> {{element.dueDate}} </td>
           </ng-container>
 
           <!-- isCompleted Column -->
           <ng-container matColumnDef="isCompleted">
-            <th mat-header-cell *matHeaderCellDef> isCompleted  </th>
-            <td mat-cell *matCellDef="let element"> {{element.isCompleted}} </td>
+            <th mat-header-cell class="mat-is-complete-column" *matHeaderCellDef> isCompleted  </th>
+            <td mat-cell class="mat-is-complete-column" *matCellDef="let element"> {{element.isCompleted}} </td>
           </ng-container>
 
           <!-- Action Column -->
           <ng-container matColumnDef="action">
             <th mat-header-cell *matHeaderCellDef></th>
-            <td mat-cell *matCellDef="let element" class="action-link">
+            <td mat-cell class="mat-action-column" *matCellDef="let element" class="action-link">
               <a (click)="openDialog('Edit Task',element)">Edit</a> |
               <a (click)="openDialog('Delete Task',element)">Delete</a>
             </td>

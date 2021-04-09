@@ -6,11 +6,11 @@
   </mat-form-field>
 
   <mat-form-field *ngIf="action == 'Add Task'">
-    <input placeholder="{{action}} Assignee Id" matInput [(ngModel)]="localData.assigneeId">
+    <input placeholder="{{action}} Assignee Id" matInput [(ngModel)]="localData.assignee">
   </mat-form-field>
 
   <mat-form-field *ngIf="action == 'Edit Task'">
-    <input placeholder="{{action}} Assignee Id" matInput [(ngModel)]="localData.assigneeId.id">
+    <input placeholder="{{action}} Assignee Id" matInput [(ngModel)]="localData.assignee.id">
   </mat-form-field>
 
   <mat-form-field *ngIf="action != 'Delete Task'">

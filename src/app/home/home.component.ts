@@ -27,16 +27,16 @@ export class HomeComponent implements OnInit {
   constructor(private router: Router, private todoService: ToDoService, public dialog: MatDialog) {
   }
 
-  displayedColumns: string[] = ['id', 'description', 'assigneeId', 'dueDate', 'isCompleted', 'action'];
+  displayedColumns: string[] = ['id', 'description', 'assignee', 'dueDate', 'isCompleted', 'action'];
   // table: any = null;
 
   @ViewChild(MatTable, {static: true}) table: MatTable<any> | undefined;
 
 
-  public allTasks = [{
+  public allTasks: TaskModel[] = [{
     id: 1,
     description: 'foo',
-    assigneeId: {
+    assignee: {
       id: 2,
       name: 'bob'
     },
@@ -46,7 +46,7 @@ export class HomeComponent implements OnInit {
     {
       id: 2,
       description: 'bubbles',
-      assigneeId: {
+      assignee: {
       id: 1,
       name: 'alice'
     },
@@ -56,7 +56,7 @@ export class HomeComponent implements OnInit {
     {
       id: 3,
       description: 'swimming',
-      assigneeId: {
+      assignee: {
         id: 2,
         name: 'bob'
       },
@@ -66,7 +66,7 @@ export class HomeComponent implements OnInit {
     {
       id: 4,
       description: 'fun',
-      assigneeId: {
+      assignee: {
         id: 3,
         name: 'eve'
       },
@@ -90,23 +90,19 @@ export class HomeComponent implements OnInit {
   }];
 
 
-
-  public mockTask = {
-    id: 4,
-    description: 'fun',
-    assigneeId: 2,
-    dueDate: '10-23-2021',
-    isCompleted: false
-  };
    // const dataTable = new MDCDataTable(document.querySelector('.mdc-data-table'));
 
+
   ngOnInit(): void {
-    // this.allTasks = this.getAllTasks()
+    // this.allTasks =
+      //this.getTasks();
   }
 
+  /*
   async getAllTasks(): Promise<void> {  // LOOK INTO
     // this.allTasks = await this.todoService.getAllTasks();
   }
+*/
 
   openDialog(action: any, obj: any): any {
     obj.action = action;
@@ -126,11 +122,15 @@ export class HomeComponent implements OnInit {
   }
 
 
+  getTasks(): void {
+    this.todoService.getAllTasks()
+      .subscribe(tasks => this.allTasks = tasks);
+  }
 
 
   addRowData(rowObject: any): any{
     const d = new Date();  // MOCK
-    const newAssigneeId = parseInt((rowObject.assigneeId), 10);
+    const newAssigneeId = parseInt((rowObject.assignee), 10);
     console.log('NEW ASSIGNEE ID ', newAssigneeId);
     const newAssignee = this.allAssignees.filter(na => na.id === newAssigneeId)[0];
     console.log('NEW ASSIGNEE ', newAssignee);
@@ -145,11 +145,12 @@ export class HomeComponent implements OnInit {
     console.log('ADD ROW DATA', newTask.description);
 
       // PUSH newTask to Backend here!!
+    // this.todoService.addTask(newTask);
 
     this.dataSource.push({
       id: d.getTime(),
       description: rowObject.description,
-      assigneeId: newAssignee,
+      assignee: newAssignee,
       dueDate: rowObject.dueDate,
       isCompleted: rowObject.isCompleted,
     });
@@ -160,18 +161,12 @@ export class HomeComponent implements OnInit {
 
 
   updateRowData(rowObject: any): any{
-    const newAssigneeId = parseInt((rowObject.assigneeId.id), 10);
-      console.log('NEW ASSIGNEE ID ', newAssigneeId);
+    const newAssigneeId = parseInt((rowObject.assignee.id), 10);
+    console.log('NEW ASSIGNEE ID ', newAssigneeId);
+    const newAssignee = this.allAssignees.filter(na => na.id === newAssigneeId)[0];
+    console.log('NEW ASSIGNEE ', newAssignee);
 
-       const newAssignee = this.allAssignees.filter(na => na.id === newAssigneeId)[0];
-      console.log('NEW ASSIGNEE ', newAssignee);
-
-
-      // const newAssigneeName = rowObject.assigneeId as AssigneeModel;
-      // const newAssignee = this.findAssignee(rowObject.assigneeId);
-
-      // console.log('NEW ASSIGNEE Name ', newAssigneeName);
-    if (newAssignee) {  // NOT WORKING?!
+    if (newAssignee) {  // NOT WORKING FULLY?!
       const editedTask: TaskModel = {
         id: rowObject.id,
         description: rowObject.description,
@@ -182,11 +177,12 @@ export class HomeComponent implements OnInit {
       console.log('UPDATE ROW DATA', editedTask.description);
 
       // PATCH newTask to Backend here!!
+      this.todoService.updateTask(editedTask);
 
       this.dataSource = this.dataSource.filter((value, key) => {
         if (value.id === rowObject.id) {
           value.description = rowObject.description,
-            value.assigneeId = newAssignee,
+            value.assignee = newAssignee, // was value.assigneeId = newAssignee,
             value.dueDate = rowObject.dueDate,
             value.isCompleted = rowObject.isCompleted;
         }
