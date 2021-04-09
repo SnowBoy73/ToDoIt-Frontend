@@ -5,7 +5,7 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 export interface UsersData {
   id: number;
   description: string;
-  assigneeId: number;
+  assigneeId: any;
   dueDate: string;
   isCompleted: boolean;
 }

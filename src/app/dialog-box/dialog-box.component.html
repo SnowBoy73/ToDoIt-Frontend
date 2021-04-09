@@ -5,7 +5,11 @@
     <input placeholder="{{action}} Description" matInput [(ngModel)]="localData.description">
   </mat-form-field>
 
-  <mat-form-field *ngIf="action != 'Delete Task'">
+  <mat-form-field *ngIf="action == 'Add Task'">
+    <input placeholder="{{action}} Assignee Id" matInput [(ngModel)]="localData.assigneeId">
+  </mat-form-field>
+
+  <mat-form-field *ngIf="action == 'Edit Task'">
     <input placeholder="{{action}} Assignee Id" matInput [(ngModel)]="localData.assigneeId.id">
   </mat-form-field>
 

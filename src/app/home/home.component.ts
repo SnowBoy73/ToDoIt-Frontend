@@ -128,10 +128,21 @@ export class HomeComponent implements OnInit {
 
   addRowData(rowObject: any): any{
     const d = new Date();  // MOCK
+
+    const newAssigneeId = parseInt((rowObject.assigneeId.id), 10);
+    console.log('NEW ASSIGNEE ID ', newAssigneeId);
+
+    const newAssignee = this.allAssignees.filter(na => na.id === newAssigneeId)[0];
+    console.log('NEW ASSIGNEE ', newAssignee);
+
+
+    console.log('NEW ASSIGNEE ID ', newAssigneeId);
+    console.log('NEW ASSIGNEE ', newAssignee);
+
     const newTask: TaskModel = {
       id: d.getTime(),  // MOCK
       description: rowObject.description,
-      assigneeId: rowObject.assigneeId, // .name,
+      assignee: newAssignee, // rowObject.assigneeId, // .name,
       dueDate: rowObject.dueDate,
       isCompleted: rowObject.isCompleted,
     };
@@ -162,38 +173,42 @@ export class HomeComponent implements OnInit {
   }
 
   updateRowData(rowObject: any): any{
-  const newAssigneeId = parseInt((rowObject.assigneeId.id), 10);
-    console.log('NEW ASSIGNEE ID ', newAssigneeId);
+    const newAssigneeId = parseInt((rowObject.assigneeId.id), 10);
+      console.log('NEW ASSIGNEE ID ', newAssigneeId);
 
-     const newAssignee = this.allAssignees.filter(na => na.id === newAssigneeId)[0];
-    console.log('NEW ASSIGNEE ', newAssignee);
+       const newAssignee = this.allAssignees.filter(na => na.id === newAssigneeId)[0];
+      console.log('NEW ASSIGNEE ', newAssignee);
 
 
-    // const newAssigneeName = rowObject.assigneeId as AssigneeModel;
-    // const newAssignee = this.findAssignee(rowObject.assigneeId);
+      // const newAssigneeName = rowObject.assigneeId as AssigneeModel;
+      // const newAssignee = this.findAssignee(rowObject.assigneeId);
 
-    // console.log('NEW ASSIGNEE Name ', newAssigneeName);
+      // console.log('NEW ASSIGNEE Name ', newAssigneeName);
+    if (newAssignee) {  // NOT WORKING?!
+      const editedTask: TaskModel = {
+        id: rowObject.id,
+        description: rowObject.description,
+        assignee: newAssignee,
+        dueDate: rowObject.dueDate,
+        isCompleted: rowObject.isCompleted,
+      };
+      console.log('UPDATE ROW DATA', editedTask.description);
 
-    const editedTask: TaskModel = {
-      id: rowObject.id,
-      description: rowObject.description,
-      assigneeId: newAssignee,
-      dueDate: rowObject.dueDate,
-      isCompleted: rowObject.isCompleted,
-    };
-    console.log('UPDATE ROW DATA', editedTask.description);
+      // PATCH newTask to Backend here!!
 
-    // PATCH newTask to Backend here!!
+      this.dataSource = this.dataSource.filter((value, key) => {
+        if (value.id === rowObject.id) {
+          value.description = rowObject.description,
+            value.assigneeId = newAssignee,
+            value.dueDate = rowObject.dueDate,
+            value.isCompleted = rowObject.isCompleted;
+        }
+        return true;
+      });
+    } else {
+      console.log('FAIL');
 
-    this.dataSource = this.dataSource.filter((value, key) => {
-      if (value.id === rowObject.id){
-        value.description = rowObject.description,
-        value.assigneeId = newAssignee,
-        value.dueDate = rowObject.dueDate,
-        value.isCompleted = rowObject.isCompleted;
-      }
-      return true;
-    });
+    }
   }
 
   deleteRowData(rowObject: any): any{

@@ -22,7 +22,7 @@ export class ToDoService {
       const taskDueDate = a.dueDate;
       const taskIsCompleted = a.isCompleted;
       return {
-        id: taskId, description: taskDescription, assigneeId: taskAssigneeId, dueDate: taskDueDate, isCompleted: taskIsCompleted
+        id: taskId, description: taskDescription, assignee: taskAssigneeId, dueDate: taskDueDate, isCompleted: taskIsCompleted
       } as TaskModel ;
     });
   }
