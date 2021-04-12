@@ -64,4 +64,22 @@
     </mat-card-content>
   </mat-card>
 
+
+
+
+
+  <mat-card fxFlex="80, 80" fxLayout="column">
+    <mat-card-header fxFlex="40px" fxLayoutAlign="center top">
+      <mat-card-title style="font-size: large; font-family: 'American Typewriter'">Assignees</mat-card-title>
+    </mat-card-header>
+    <mat-card-content fxFlex="100">
+     <mat-list *ngFor="let assignee of allAssignees as Assignee">
+                       {{assignee.id}} : {{assignee.name}}
+     </mat-list>
+
+
+    </mat-card-content>
+  </mat-card>
+
+
 </div>
