@@ -35,58 +35,59 @@ export class HomeComponent implements OnInit {
 
   public allTasks: TaskModel[] = [{
     id: 1,
-    description: 'foo',
+    description: 'Make Tea',
     assignee: {
       id: 2,
-      name: 'bob'
+      name: 'Bob'
     },
     dueDate: '22-03-2022',
     isCompleted: true
   },
     {
       id: 2,
-      description: 'bubbles',
+      description: 'Fix Door',
       assignee: {
       id: 1,
-      name: 'alice'
+      name: 'Alice'
     },
       dueDate: '19-10-2022',
       isCompleted: false
     },
     {
       id: 3,
-      description: 'swimming',
+      description: 'Eat Cake',
       assignee: {
         id: 2,
-        name: 'bob'
+        name: 'Bob'
       },
       dueDate: '04-03-2021',
       isCompleted: true
     },
     {
       id: 4,
-      description: 'fun',
+      description: 'Make Cheese',
       assignee: {
         id: 3,
-        name: 'eve'
+        name: 'Eve'
       },
       dueDate: '10-03-2021',
       isCompleted: false
     }];
 
+  public taskIndex = 4;
   dataSource = this.allTasks;  // was ELEMENT_DATA
 
   public allAssignees: AssigneeModel[] = [{
     id: 1,
-    name: 'alice'
+    name: 'Alice'
   },
   {
     id: 2,
-    name: 'bob'
+    name: 'Bob'
   },
   {
     id: 3,
-    name: 'eve'
+    name: 'Eve'
   }];
 
 
@@ -95,7 +96,7 @@ export class HomeComponent implements OnInit {
 
   ngOnInit(): void {
     // this.allTasks =
-      //this.getTasks();
+      // this.getTasks();
   }
 
   /*
@@ -129,14 +130,15 @@ export class HomeComponent implements OnInit {
 
 
   addRowData(rowObject: any): any{
-    const d = new Date();  // MOCK
+    // const d = new Date();  // MOCK
     const newAssigneeId = parseInt((rowObject.assignee), 10);
     console.log('NEW ASSIGNEE ID ', newAssigneeId);
     const newAssignee = this.allAssignees.filter(na => na.id === newAssigneeId)[0];
     console.log('NEW ASSIGNEE ', newAssignee);
-
+    this.taskIndex ++;
     const newTask: TaskModel = {
-      id: d.getTime(),  // MOCK
+      // id: d.getTime(),  // MOCK
+      id: this.taskIndex,
       description: rowObject.description,
       assignee: newAssignee, // rowObject.assigneeId, // .name,
       dueDate: rowObject.dueDate,
@@ -148,7 +150,8 @@ export class HomeComponent implements OnInit {
     // this.todoService.addTask(newTask);
 
     this.dataSource.push({
-      id: d.getTime(),
+      // id: d.getTime(),
+      id: this.taskIndex,
       description: rowObject.description,
       assignee: newAssignee,
       dueDate: rowObject.dueDate,
